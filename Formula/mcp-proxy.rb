@@ -1,13 +1,10 @@
 class McpProxy < Formula
   desc "MCP proxy that connects stdio/HTTP clients to remote MCP servers with OAuth support"
   homepage "https://github.com/mikluko/mcp-proxy"
+  url "https://github.com/mikluko/mcp-proxy/archive/refs/tags/v0.1.0.tar.gz"
+  sha256 "af93257713debcd9800112d5edd2a9027863566848fa2b07c5148eb820b4630c"
   license "MIT"
   head "https://github.com/mikluko/mcp-proxy.git", branch: "main"
-
-  # Stable version will be added when first release is tagged
-  # url "https://github.com/mikluko/mcp-proxy/archive/refs/tags/v0.1.0.tar.gz"
-  # sha256 "CHECKSUM"
-  # version "0.1.0"
 
   depends_on "go" => :build
 
