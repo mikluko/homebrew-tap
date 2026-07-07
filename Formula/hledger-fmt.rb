@@ -1,8 +1,8 @@
 class HledgerFmt < Formula
   desc "Hledger add-on: format-preserving journal formatter"
   homepage "https://github.com/mikluko/hledger-fmt"
-  url "https://github.com/mikluko/hledger-fmt/archive/refs/tags/v0.1.0.1.tar.gz"
-  sha256 "019089a346c0ce9e6ccf0081f9cb4947c49dad3c92a873749433cad55a7507de"
+  url "https://github.com/mikluko/hledger-fmt/archive/refs/tags/v0.1.0.2.tar.gz"
+  sha256 "32baca70cd2ced736828f19dd2529ab17818288e3e46d3c112431af408ce2c82"
   license "MIT"
   head "https://github.com/mikluko/hledger-fmt.git", branch: "main"
 
