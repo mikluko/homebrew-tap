@@ -1,8 +1,8 @@
 class Valiss < Formula
   desc "NATS-style tenant authentication for gRPC and HTTP: nkey credential issuer CLI"
   homepage "https://github.com/mikluko/valiss"
-  url "https://github.com/mikluko/valiss/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "e1604aa0d07eb670929913679531c1b231fe821eab4e9f5f6030f9e9cb565871"
+  url "https://github.com/mikluko/valiss/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "8066260eadfa801d52955137d553ca2fce1fe027270d0c3765cf469b6cbbdf85"
   license "MIT"
   head "https://github.com/mikluko/valiss.git", branch: "main"
 
