@@ -1,8 +1,8 @@
 class Claudectx < Formula
   desc "Launch Claude Code with provider contexts, kubeconfig-style"
   homepage "https://github.com/mikluko/claudectx"
-  url "https://github.com/mikluko/claudectx/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "128972ce5f10e72c7d9cb4519a7350356cf491aa00deb3bedbc7805d458480a8"
+  url "https://github.com/mikluko/claudectx/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "8d97509b665860ec027364599318074a5f1a94027eec0a0238fed7f6b5304ad9"
   license "MIT"
   head "https://github.com/mikluko/claudectx.git", branch: "main"
 
