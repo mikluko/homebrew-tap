@@ -6,7 +6,8 @@ class TurboFieldfare < Formula
   license "Apache-2.0"
   head "https://github.com/drumih/turbo-fieldfare.git", branch: "main"
 
-  depends_on xcode: ["26.0", :build]
+  # no Xcode requirement: the Metal shaders ship as .metal source and are compiled
+  # at runtime, so the Command Line Tools toolchain is enough to build every product
   depends_on arch: :arm64
   depends_on macos: :tahoe
 
@@ -121,31 +122,21 @@ class TurboFieldfare < Formula
 
   def caveats
     <<~EOS
-      The Mac app is installed outside /Applications. Link it there with:
+      For Finder and Spotlight:
         ln -sfn #{opt_prefix}/TurboFieldfare.app /Applications/TurboFieldfare.app
 
-      Model weights are not included (~14.3 GB). The app installs them on first run,
-      and the service reads the same directory, so one copy serves both. To install
-      them without the app:
+      Weights are not included (~14.3 GB). The app installs them on first run; the
+      service reads the same directory. Without the app:
         turbo-fieldfare-repack --output ~/"#{MODEL_DIR}"
 
-      The command-line tools take no default; pass that path to --model yourself.
+      The command-line tools have no default; pass that path to --model.
 
-      `brew services start turbo-fieldfare` then serves that model on
-      http://127.0.0.1:8080/v1, with no authentication or TLS. Port and model path
-      are read from this file at every start:
-        #{etc}/turbo-fieldfare/server.env
+      The service serves http://127.0.0.1:8080/v1, loopback only, no auth or TLS.
+        config: #{etc}/turbo-fieldfare/server.env
+        log:    #{var}/log/turbo-fieldfare-server.log
 
-      If another process already holds the port, the server cannot bind and exits,
-      and launchd keeps retrying quietly, so a service that never comes up means
-      reading:
-        #{var}/log/turbo-fieldfare-server.log
-
-      Run only one of the app, the CLI, and the service at a time. Each one loads
-      the model and takes the Metal device for itself.
-
-      The app bundle is unsigned. SwiftPM requires its resource bundles in the
-      .app root, which codesign rejects as unsealed content.
+      Run one of the app, the CLI, and the service at a time. The app bundle is
+      unsigned.
     EOS
   end
 
