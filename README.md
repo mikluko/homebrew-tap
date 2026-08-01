@@ -34,12 +34,15 @@ ln -sfn /opt/homebrew/opt/turbo-fieldfare/TurboFieldfare.app /Applications/Turbo
 ```
 
 Model weights are not included. The app downloads and repacks them on first run
-(~14.3 GB installed). The command-line tools and the service expect them at a
-fixed path:
+(~14.3 GB installed), into `~/Library/Application Support/TurboFieldfare`. The
+service reads that same directory, so the app and the server share one copy. To
+install the weights without going through the app:
 
 ```sh
-turbo-fieldfare-repack --output "$(brew --prefix)/var/turbo-fieldfare/gemma4.gturbo"
+turbo-fieldfare-repack --output ~/"Library/Application Support/TurboFieldfare/gemma4.gturbo"
 ```
+
+The command-line tools have no default of their own; pass that path to `--model`.
 
 ### Running the server as a service
 
@@ -50,6 +53,27 @@ brew services start turbo-fieldfare
 That serves the model above on `http://127.0.0.1:8080/v1`, restarts it if it
 crashes, and logs to `$(brew --prefix)/var/log/turbo-fieldfare-server.log`. The
 endpoint is loopback-only and has neither authentication nor TLS.
+
+Port 8080 is crowded, so both the port and the model path are configurable:
+
+```sh
+# $(brew --prefix)/etc/turbo-fieldfare/server.env
+TURBO_FIELDFARE_PORT=8081
+TURBO_FIELDFARE_MODEL=$HOME/Library/Application Support/TurboFieldfare/gemma4.gturbo
+```
+
+`brew services restart turbo-fieldfare` applies a change. The service runs a shim
+that reads this file and builds the arguments, because launchd expands nothing in
+`ProgramArguments` and the server itself reads no environment variables.
+
+If something else already holds the port, the server cannot bind and exits, and
+launchd keeps retrying on its own throttle rather than reporting anything useful.
+A bind failure looks like a service that never comes up, so check the log first:
+
+```sh
+lsof -nP -iTCP:8080 -sTCP:LISTEN
+tail "$(brew --prefix)/var/log/turbo-fieldfare-server.log"
+```
 
 Run only one of the app, the CLI, and the service at a time. Each loads its own
 copy of the model.

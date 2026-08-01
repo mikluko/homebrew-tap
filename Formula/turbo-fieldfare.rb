@@ -20,6 +20,10 @@ class TurboFieldfare < Formula
 
   ICON_SIZES = [16, 32, 128, 256, 512].freeze
 
+  # AppModelLocation falls back to Application Support once the app runs outside a
+  # package checkout, so the service reads whatever the app installed
+  MODEL_DIR = "Library/Application Support/TurboFieldfare/gemma4.gturbo".freeze
+
   def install
     (COMMANDS.keys + APP_PRODUCTS).each do |product|
       system "swift", "build", "--disable-sandbox", "-c", "release", "--product", product
@@ -80,11 +84,36 @@ class TurboFieldfare < Formula
       bin.write_exec_script libexec/command
     end
 
+    # launchd expands nothing in ProgramArguments and the server reads no
+    # environment, so the service goes through a shim that builds the argv
+    (libexec/"turbo-fieldfare-service").write <<~SH
+      #!/bin/bash
+      set -euo pipefail
+
+      config="#{etc}/turbo-fieldfare/server.env"
+      if [ -r "$config" ]; then
+        . "$config"
+      fi
+
+      exec "#{opt_libexec}/turbo-fieldfare-server" \\
+        --model "${TURBO_FIELDFARE_MODEL:-$HOME/#{MODEL_DIR}}" \\
+        --port "${TURBO_FIELDFARE_PORT:-8080}"
+    SH
+    chmod 0755, libexec/"turbo-fieldfare-service"
+
+    (etc/"turbo-fieldfare").mkpath
+    server_env = etc/"turbo-fieldfare/server.env"
+    server_env.write(<<~ENV) unless server_env.exist?
+      # Read by `brew services start turbo-fieldfare`; restart to apply changes.
+      # TURBO_FIELDFARE_PORT=8080
+      # TURBO_FIELDFARE_MODEL=$HOME/#{MODEL_DIR}
+    ENV
+
     (var/"log").mkpath
   end
 
   service do
-    run [opt_bin/"turbo-fieldfare-server", "--model", var/"turbo-fieldfare/gemma4.gturbo"]
+    run opt_libexec/"turbo-fieldfare-service"
     keep_alive crashed: true
     log_path var/"log/turbo-fieldfare-server.log"
     error_log_path var/"log/turbo-fieldfare-server.log"
@@ -95,13 +124,25 @@ class TurboFieldfare < Formula
       The Mac app is installed outside /Applications. Link it there with:
         ln -sfn #{opt_prefix}/TurboFieldfare.app /Applications/TurboFieldfare.app
 
-      The model weights are not included. The app installs them on first run. The
-      command-line tools and the service expect them here:
-        turbo-fieldfare-repack --output #{var}/turbo-fieldfare/gemma4.gturbo
+      Model weights are not included (~14.3 GB). The app installs them on first run,
+      and the service reads the same directory, so one copy serves both. To install
+      them without the app:
+        turbo-fieldfare-repack --output ~/"#{MODEL_DIR}"
+
+      The command-line tools take no default; pass that path to --model yourself.
 
       `brew services start turbo-fieldfare` then serves that model on
-      http://127.0.0.1:8080/v1, with no authentication or TLS. Run only one of the
-      app, the CLI, and the service at a time; each loads its own copy of the model.
+      http://127.0.0.1:8080/v1, with no authentication or TLS. Port and model path
+      are read from this file at every start:
+        #{etc}/turbo-fieldfare/server.env
+
+      If another process already holds the port, the server cannot bind and exits,
+      and launchd keeps retrying quietly, so a service that never comes up means
+      reading:
+        #{var}/log/turbo-fieldfare-server.log
+
+      Run only one of the app, the CLI, and the service at a time. Each one loads
+      the model and takes the Metal device for itself.
 
       The app bundle is unsigned. SwiftPM requires its resource bundles in the
       .app root, which codesign rejects as unsealed content.
@@ -112,6 +153,9 @@ class TurboFieldfare < Formula
     assert_match "--messages-file", shell_output("#{bin}/turbo-fieldfare --help")
     assert_match "--prompt-cache-mode", shell_output("#{bin}/turbo-fieldfare-server --help")
     assert_match "--verify-install", shell_output("#{bin}/turbo-fieldfare-repack --help")
+
+    assert_match "--port \"${TURBO_FIELDFARE_PORT:-8080}\"",
+                 (libexec/"turbo-fieldfare-service").read
 
     app = prefix/"TurboFieldfare.app"
     assert_path_exists app/"Contents/MacOS/TurboFieldfareDecodeService"
