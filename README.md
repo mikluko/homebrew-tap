@@ -34,8 +34,25 @@ ln -sfn /opt/homebrew/opt/turbo-fieldfare/TurboFieldfare.app /Applications/Turbo
 ```
 
 Model weights are not included. The app downloads and repacks them on first run
-(~14.3 GB installed), or `turbo-fieldfare-repack --output ~/gemma4.gturbo` does
-the same from a terminal.
+(~14.3 GB installed). The command-line tools and the service expect them at a
+fixed path:
+
+```sh
+turbo-fieldfare-repack --output "$(brew --prefix)/var/turbo-fieldfare/gemma4.gturbo"
+```
+
+### Running the server as a service
+
+```sh
+brew services start turbo-fieldfare
+```
+
+That serves the model above on `http://127.0.0.1:8080/v1`, restarts it if it
+crashes, and logs to `$(brew --prefix)/var/log/turbo-fieldfare-server.log`. The
+endpoint is loopback-only and has neither authentication nor TLS.
+
+Run only one of the app, the CLI, and the service at a time. Each loads its own
+copy of the model.
 
 The app bundle is unsigned: SwiftPM resolves its resource bundles against the
 `.app` root, which `codesign` rejects as unsealed content. A locally built app

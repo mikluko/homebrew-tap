@@ -79,6 +79,15 @@ class TurboFieldfare < Formula
       libexec.install build/product => command
       bin.write_exec_script libexec/command
     end
+
+    (var/"log").mkpath
+  end
+
+  service do
+    run [opt_bin/"turbo-fieldfare-server", "--model", var/"turbo-fieldfare/gemma4.gturbo"]
+    keep_alive crashed: true
+    log_path var/"log/turbo-fieldfare-server.log"
+    error_log_path var/"log/turbo-fieldfare-server.log"
   end
 
   def caveats
@@ -86,8 +95,13 @@ class TurboFieldfare < Formula
       The Mac app is installed outside /Applications. Link it there with:
         ln -sfn #{opt_prefix}/TurboFieldfare.app /Applications/TurboFieldfare.app
 
-      The model weights are not included. The app installs them on first run, or:
-        turbo-fieldfare-repack --output ~/gemma4.gturbo
+      The model weights are not included. The app installs them on first run. The
+      command-line tools and the service expect them here:
+        turbo-fieldfare-repack --output #{var}/turbo-fieldfare/gemma4.gturbo
+
+      `brew services start turbo-fieldfare` then serves that model on
+      http://127.0.0.1:8080/v1, with no authentication or TLS. Run only one of the
+      app, the CLI, and the service at a time; each loads its own copy of the model.
 
       The app bundle is unsigned. SwiftPM requires its resource bundles in the
       .app root, which codesign rejects as unsealed content.
