@@ -3,9 +3,11 @@ class Octant < Formula
   homepage "https://github.com/mikluko/octant"
   # the repo is private, so both specs are git+SSH: the clone happens before
   # brew's build sandbox and goes through the 1Password agent, which is what
-  # keeps a brew-specific credential from existing anywhere
-  url "git@github.com:mikluko/octant.git", tag: "0.1"
-  head "git@github.com:mikluko/octant.git", branch: "main"
+  # keeps a brew-specific credential from existing anywhere. It has to be the
+  # ssh:// URI and not git@host:path — Homebrew picks the download strategy by
+  # parsing the URL, and scp-style syntax is not a URI, so it lands on curl.
+  url "ssh://git@github.com/mikluko/octant.git", tag: "0.1"
+  head "ssh://git@github.com/mikluko/octant.git", branch: "main"
 
   depends_on "go" => :build
 
@@ -13,7 +15,7 @@ class Octant < Formula
     # the pure-Go SQLite driver is the whole reason cgo can be off, and off is
     # what makes the binary answer to nothing outside the prefix
     ENV["CGO_ENABLED"] = "0"
-    system "go", "build", *std_go_args(ldflags: "-s -w -X main.version=#{version}")
+    system "go", "build", *std_go_args(ldflags: "-X main.version=#{version}")
     (var/"log").mkpath
   end
 
