@@ -6,7 +6,9 @@ class Octant < Formula
   # keeps a brew-specific credential from existing anywhere. It has to be the
   # ssh:// URI and not git@host:path — Homebrew picks the download strategy by
   # parsing the URL, and scp-style syntax is not a URI, so it lands on curl.
-  url "ssh://git@github.com/mikluko/octant.git", tag: "0.1"
+  url "ssh://git@github.com/mikluko/octant.git",
+      tag:      "0.1",
+      revision: "16ef14aae705dce3ebfdb4020f6af6e50b7efa05"
   head "ssh://git@github.com/mikluko/octant.git", branch: "main"
 
   depends_on "go" => :build
