@@ -12,11 +12,15 @@ class Octant < Formula
   head "ssh://git@github.com/mikluko/octant.git", branch: "main"
 
   depends_on "go" => :build
+  # a runtime dependency rather than a build one: the binding dlopens the
+  # library on a path instead of linking it, so a build never sees it and a
+  # missing one is an error at startup naming the path it tried
+  depends_on "onnxruntime"
 
   def install
-    # the pure-Go SQLite driver is the whole reason cgo can be off, and off is
-    # what makes the binary answer to nothing outside the prefix
-    ENV["CGO_ENABLED"] = "0"
+    # cgo is on for the ONNX Runtime binding, and for nothing else — SQLite
+    # stays pure Go, so the embedder is the whole of what this reaches
+    ENV["CGO_ENABLED"] = "1"
     system "go", "build", *std_go_args(ldflags: "-X main.version=#{version}")
     (var/"log").mkpath
   end
@@ -48,9 +52,15 @@ class Octant < Formula
         gunzip -c ~/.local/share/octant/backups/octant-YYYY-MM-DD.db.gz \\
           > ~/.local/share/octant/octant.db
 
-      There is no config file. Persistent overrides of OCTANT_ADDR, OCTANT_DB and
-      OCTANT_LOG_LEVEL go in ~/.homebrew/services/octant.env, one KEY=value per
-      line, applied on the next `brew services restart octant`.
+      There is no config file. Persistent overrides of OCTANT_ADDR, OCTANT_DB,
+      OCTANT_LOG_LEVEL and OCTANT_ONNXRUNTIME_LIBRARY go in
+      ~/.homebrew/services/octant.env, one KEY=value per line, applied on the
+      next `brew services restart octant`.
+
+      The semantic index records the ONNX Runtime it was written under, so
+      `brew upgrade onnxruntime` across a minor version drops it and rebuilds
+      on the next restart. That takes about twenty seconds, during which search
+      answers thinly; the log says when it is whole.
 
       `brew upgrade` does not restart services and a running process keeps its
       inode, so an upgrade needs:
@@ -67,7 +77,9 @@ class Octant < Formula
                 "--db", testpath/"octant.db"
     begin
       # a snapshot lands at startup rather than a day in, so its arrival is also
-      # the signal that the daemon finished opening the database
+      # the signal that the daemon finished opening the database — and, since
+      # the embedder opens ONNX Runtime before the listener starts, that the
+      # dependency resolved to a library this build can actually load
       50.times do
         break if Dir[snapshots/"octant-*.db.gz"].any?
 
