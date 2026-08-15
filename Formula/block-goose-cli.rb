@@ -1,9 +1,9 @@
 class BlockGooseCli < Formula
   desc "Open source, extensible AI agent (OSC 8 hyperlinks fork)"
   homepage "https://goose-docs.ai/"
-  url "https://github.com/mikluko/goose/archive/d236fbb1c87b4028dcbfca5c8367ae248cad9678.tar.gz"
-  version "1.46.0.d236fbb"
-  sha256 "2da71e2d40d538c005524100e6ebb0af47a321c1cdd93e026c1359cbfb8b2d3f"
+  url "https://github.com/mikluko/goose/archive/cd0a708e6217c861deaffc49dc1b360037ff381b.tar.gz"
+  version "1.46.0.cd0a708"
+  sha256 "0a9bda929f234be2182d74a214514df988851810831db11b85281d5f13755d70"
   license "Apache-2.0"
   head "https://github.com/mikluko/goose.git", branch: "mikluko/osc8-hyperlinks"
 
