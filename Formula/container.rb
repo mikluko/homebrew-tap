@@ -1,9 +1,9 @@
 class Container < Formula
   desc "Create and run Linux containers using lightweight virtual machines"
   homepage "https://apple.github.io/container/documentation/"
-  url "https://github.com/mikluko/container/archive/dc300bb0ac33492b232971bd2d302c02cd6ee97d.tar.gz"
-  version "1.2.2.dc300bb"
-  sha256 "38013a75572ebce6659fc9f8adb9b999b00da0658a8a75abf72fbf6b1fd1355a"
+  url "https://github.com/mikluko/container/archive/99b1fd27b9b55c7e58027071edc8868dde72ca85.tar.gz"
+  version "1.2.2.99b1fd2"
+  sha256 "794d50eb0f65f7c299b07d5b12095f4c28646975f6638df8846143fd09fdf724"
   license "Apache-2.0"
   head "https://github.com/mikluko/container.git", branch: "k8s-create-publish"
 
