@@ -60,6 +60,26 @@ TURBO_FIELDFARE_MODEL=$HOME/Library/Application Support/TurboFieldfare/gemma4.gt
 A taken port shows up as a service that never starts, with the reason only in
 the log. Run one of the app, the CLI, and the service at a time.
 
+## hledger@1.99
+
+The hledger 1.99.x pre-release series, the run-up to 2.0. Upstream:
+[simonmichael/hledger](https://github.com/simonmichael/hledger).
+
+```sh
+brew install mikluko/tap/hledger@1.99
+```
+
+Keg-only, so it does not displace `hledger` from homebrew-core. Builds
+`hledger`, `hledger-ui`, and `hledger-web` from source with the GHC the
+release's `stack.yaml` pins (9.14).
+
+```sh
+export PATH="$(brew --prefix hledger@1.99)/bin:$PATH"
+```
+
+Or `brew link --overwrite hledger@1.99` to take over the stable one;
+`brew unlink hledger@1.99 && brew link hledger` reverts.
+
 ## Other formulae
 
 ```sh
