@@ -22,6 +22,13 @@ class Octant < Formula
     # stays pure Go, so the embedder is the whole of what this reaches
     ENV["CGO_ENABLED"] = "1"
     system "go", "build", *std_go_args(ldflags: "-X main.version=#{version}")
+    # the harness is a second binary in the same module, stamped the same way;
+    # output: names it, since std_go_args would otherwise name it after the
+    # formula
+    system "go", "build",
+           *std_go_args(output: bin/"octant-harness", ldflags: "-X main.version=#{version}"),
+           "./cmd/harness"
+    pkgshare.install "share/octant.just"
     (var/"log").mkpath
   end
 
@@ -62,6 +69,18 @@ class Octant < Formula
       on the next restart. That takes about twenty seconds, during which search
       answers thinly; the log says when it is whole.
 
+      The same build installs the harness daemon beside the register:
+        #{opt_bin}/octant-harness
+
+      and the loop's just module, which a consuming repo's Justfile imports:
+        import '#{opt_pkgshare}/octant.just'
+      (or `mod octant '...'` for a namespaced `just octant::pass`). The consumer
+      sets `set dotenv-load` at its root and carries OCTANT_EFFORT in .env.
+      Provider settings (OCTANT_PROVIDER, OCTANT_MODEL, OCTANT_BASE_URL and
+      OCTANT_ANTHROPIC_API_KEY or OCTANT_KIMICODE_API_KEY, or either _FILE
+      variant) and OCTANT_ADDR are read from the environment by the harness
+      itself; nothing else needs installing beside the module.
+
       `brew upgrade` does not restart services and a running process keeps its
       inode, so an upgrade needs:
         brew services restart octant
@@ -70,6 +89,7 @@ class Octant < Formula
 
   test do
     assert_match "usage: octant serve", shell_output("#{bin}/octant 2>&1", 1)
+    assert_match "usage: octant-harness", shell_output("#{bin}/octant-harness --bogus 2>&1", 1)
 
     port = free_port
     snapshots = testpath/"backups"
