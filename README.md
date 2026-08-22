@@ -88,6 +88,7 @@ brew install mikluko/tap/<formula>
 
 | Formula | Description | Upstream |
 | --- | --- | --- |
+| `bashguard` | Claude Code hook denying shell file writes in favour of Write and Edit | [mikluko/bashguard](https://github.com/mikluko/bashguard) |
 | `claudectx` | Launch Claude Code with provider contexts, kubeconfig-style | [mikluko/claudectx](https://github.com/mikluko/claudectx) |
 | `mcp-proxy` | MCP proxy connecting stdio/HTTP clients to remote servers, with OAuth | [mikluko/mcp-proxy](https://github.com/mikluko/mcp-proxy) |
 | `hledger-fmt` | hledger add-on: format-preserving journal formatter | [mikluko/hledger-fmt](https://github.com/mikluko/hledger-fmt) |
