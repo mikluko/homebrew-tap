@@ -7,8 +7,8 @@ class Octant < Formula
   # ssh:// URI and not git@host:path — Homebrew picks the download strategy by
   # parsing the URL, and scp-style syntax is not a URI, so it lands on curl.
   url "ssh://git@github.com/mikluko/octant.git",
-      tag:      "0.22",
-      revision: "01ac3625c70af30b60815b0581106fb24f34d624"
+      tag:      "0.23",
+      revision: "222eb81cdc7dd45ba055698a48f1df86fcf23159"
   head "ssh://git@github.com/mikluko/octant.git", branch: "main"
 
   depends_on "go" => :build
