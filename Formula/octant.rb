@@ -8,7 +8,7 @@ class Octant < Formula
   # parsing the URL, and scp-style syntax is not a URI, so it lands on curl.
   url "ssh://git@github.com/mikluko/octant.git",
       tag:      "0.27",
-      revision: "befdd617f34b0a3b8bf07c8d320acdf55e8afa0e"
+      revision: "19b23491e2656bdf6f8812b53dc08d19707402d3"
   head "ssh://git@github.com/mikluko/octant.git", branch: "main"
 
   depends_on "go" => :build
