@@ -94,6 +94,7 @@ brew install mikluko/tap/<formula>
 | `hledger-fmt` | hledger add-on: format-preserving journal formatter | [mikluko/hledger-fmt](https://github.com/mikluko/hledger-fmt) |
 | `hledger-close-cta` | hledger add-on: period-end closing with currency translation adjustment | [mikluko/hledger-close-cta](https://github.com/mikluko/hledger-close-cta) |
 | `claude-agent-acp` | ACP adapter for Claude Code, powered by the Claude Agent SDK | [agentclientprotocol/claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) |
+| `clauth` | Multi-account manager and usage monitor for Claude Code, with CLI, TUI and MCP | [uwuclxdy/clauth](https://github.com/uwuclxdy/clauth) |
 
 Formulae for other people's projects are unofficial and unaffiliated. Report
 packaging problems here, software bugs upstream.
