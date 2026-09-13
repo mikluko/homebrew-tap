@@ -80,6 +80,30 @@ export PATH="$(brew --prefix hledger@1.99)/bin:$PATH"
 Or `brew link --overwrite hledger@1.99` to take over the stable one;
 `brew unlink hledger@1.99 && brew link hledger` reverts.
 
+## herdr
+
+Upstream [herdrdev/herdr](https://github.com/herdrdev/herdr) plus one setting,
+`ui.pane_focus_anchor`, built from
+[mikluko/herdr](https://github.com/mikluko/herdr). It replaces the
+homebrew-core formula of the same name:
+
+```sh
+brew uninstall herdr
+brew install mikluko/tap/herdr
+```
+
+The setting picks the neighbour directional pane focus lands on when several
+touch the focused pane's edge:
+
+```toml
+[ui]
+pane_focus_anchor = "pane"     # default, upstream behaviour: longest shared edge
+pane_focus_anchor = "cursor"   # the pane on the terminal cursor's row, as vim
+pane_focus_anchor = "recent"   # the pane focused most recently, as tmux
+```
+
+Builds from source with Zig 0.16 from homebrew-core.
+
 ## Other formulae
 
 ```sh
