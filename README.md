@@ -1,6 +1,7 @@
 # mikluko/homebrew-tap
 
-Homebrew formulae for my projects and for a few upstream ones with no tap.
+Homebrew formulae and casks for my projects and for a few upstream ones with no
+tap.
 
 ## turbo-fieldfare
 
@@ -120,5 +121,18 @@ brew install mikluko/tap/<formula>
 | `claude-agent-acp` | ACP adapter for Claude Code, powered by the Claude Agent SDK | [agentclientprotocol/claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) |
 | `clauth` | Multi-account manager and usage monitor for Claude Code, with CLI, TUI and MCP | [uwuclxdy/clauth](https://github.com/uwuclxdy/clauth) |
 
-Formulae for other people's projects are unofficial and unaffiliated. Report
-packaging problems here, software bugs upstream.
+## Casks
+
+```sh
+brew install --cask mikluko/tap/zenterm
+```
+
+| Cask | Description | Upstream |
+| --- | --- | --- |
+| `zenterm` | Terminal with panes, drawers and tool floats, on a libghostty core | [praxis-labs-io/zen-term](https://github.com/praxis-labs-io/zen-term) |
+
+ZenTerm needs Apple Silicon and macOS 14 or later, and updates itself through
+Sparkle, so `brew upgrade` will usually find nothing to do.
+
+Formulae and casks for other people's projects are unofficial and unaffiliated.
+Report packaging problems here, software bugs upstream.
