@@ -116,6 +116,7 @@ brew install mikluko/tap/<formula>
 | `bashguard` | Claude Code hook denying shell file writes in favour of Write and Edit | [mikluko/bashguard](https://github.com/mikluko/bashguard) |
 | `claudectx` | Launch Claude Code with provider contexts, kubeconfig-style | [mikluko/claudectx](https://github.com/mikluko/claudectx) |
 | `mcp-proxy` | MCP proxy connecting stdio/HTTP clients to remote servers, with OAuth | [mikluko/mcp-proxy](https://github.com/mikluko/mcp-proxy) |
+| `zmx-nav` | Session navigation for zmx: pick a running session, or start one in a repo or worktree | [mikluko/zmx-nav](https://github.com/mikluko/zmx-nav) |
 | `hledger-fmt` | hledger add-on: format-preserving journal formatter | [mikluko/hledger-fmt](https://github.com/mikluko/hledger-fmt) |
 | `hledger-close-cta` | hledger add-on: period-end closing with currency translation adjustment | [mikluko/hledger-close-cta](https://github.com/mikluko/hledger-close-cta) |
 | `claude-agent-acp` | ACP adapter for Claude Code, powered by the Claude Agent SDK | [agentclientprotocol/claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) |
