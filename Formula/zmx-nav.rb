@@ -1,8 +1,8 @@
 class ZmxNav < Formula
   desc "Session navigation for zmx: pick a running session, or start one in a repo"
   homepage "https://github.com/mikluko/zmx-nav"
-  url "https://github.com/mikluko/zmx-nav/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "a05fb9cc8d456ab11ee5f98a9c8ad3ed5526c78b5d8dbbe03853ecd42c467cc9"
+  url "https://github.com/mikluko/zmx-nav/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "2f0f537067adeff9c774b55d8158f355bf20ae406782206f947aff935331af45"
   license "MIT"
   head "https://github.com/mikluko/zmx-nav.git", branch: "main"
 
@@ -24,6 +24,12 @@ class ZmxNav < Formula
     shell_output("#{bin}/zmx-nav pick --render repo")
 
     assert_match "unknown grouping", shell_output("#{bin}/zmx-nav pick --render nope 2>&1", 1)
+
+    # `pick --cycle` is what the picker's tab binding runs: it answers with the
+    # actions that reload the next grouping, reading the current one out of the
+    # prompt fzf exports.
+    assert_match "pick --render flat",
+                 shell_output("FZF_PROMPT='zmx(repo)> ' #{bin}/zmx-nav pick --cycle next")
 
     # `new` resolves its targets before it reaches fzf, so an empty root is
     # refused without a TTY.
