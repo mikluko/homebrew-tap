@@ -7,14 +7,25 @@ class Container < Formula
   license "Apache-2.0"
   head "https://github.com/mikluko/container.git", branch: "k8s-create-publish"
 
-  depends_on xcode: ["26.0", :build]
   depends_on arch: :arm64
   depends_on macos: :tahoe
 
   def install
     ENV["RELEASE_VERSION"] = version
 
-    system "swift", "build", *std_swift_args
+    # SwiftPM 6.4's default swiftbuild engine cannot initialise without a full
+    # Xcode.app, so the toolchain shipped in the Command Line Tools is enough
+    # only for the deprecated native engine. That engine puts the toolchain's
+    # Testing.framework on the search path of test targets alone, while
+    # ContainerTestSupport is an ordinary library target importing Testing.
+    developer_dir = Utils.safe_popen_read("/usr/bin/xcode-select", "-p").chomp
+    frameworks_dir = [
+      "#{developer_dir}/Library/Developer/Frameworks",
+      "#{developer_dir}/Library/Frameworks",
+    ].find { |dir| File.directory?("#{dir}/Testing.framework") }
+    testing_args = frameworks_dir ? ["-Xswiftc", "-F", "-Xswiftc", frameworks_dir] : []
+
+    system "swift", "build", "--build-system", "native", *std_swift_args, *testing_args
 
     release_dir = buildpath/".build/release"
 
