@@ -113,7 +113,6 @@ brew install mikluko/tap/<formula>
 
 | Formula | Description | Upstream |
 | --- | --- | --- |
-| `bashguard` | Claude Code hook denying shell file writes in favour of Write and Edit | [mikluko/bashguard](https://github.com/mikluko/bashguard) |
 | `claudectx` | Launch Claude Code with provider contexts, kubeconfig-style | [mikluko/claudectx](https://github.com/mikluko/claudectx) |
 | `mcp-proxy` | MCP proxy connecting stdio/HTTP clients to remote servers, with OAuth | [mikluko/mcp-proxy](https://github.com/mikluko/mcp-proxy) |
 | `zmx-nav` | Session navigation for zmx: pick a running session, or start one in a repo or worktree | [mikluko/zmx-nav](https://github.com/mikluko/zmx-nav) |
