@@ -3,6 +3,20 @@
 Homebrew formulae and casks for my projects and for a few upstream ones with no
 tap.
 
+The tap lives at [sarak.sh/mikluko/tap](https://sarak.sh/mikluko/tap),
+which is the preferred source. The GitHub repository is a mirror of it and stays
+until at least 1 January 2027; tap from sarak.sh:
+
+```sh
+brew tap mikluko/tap https://sarak.sh/mikluko/tap.git
+```
+
+or move an existing tap over without reinstalling anything:
+
+```sh
+brew tap --custom-remote mikluko/tap https://sarak.sh/mikluko/tap.git
+```
+
 ## turbo-fieldfare
 
 **Gemma 4 26B-A4B inference in about 2 GB of RAM on Apple Silicon**, including
