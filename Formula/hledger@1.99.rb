@@ -1,8 +1,8 @@
 class HledgerAT199 < Formula
   desc "Easy plain text accounting with command-line, terminal and web UIs"
   homepage "https://hledger.org/"
-  url "https://github.com/simonmichael/hledger/archive/refs/tags/1.99.3.tar.gz"
-  sha256 "abb248fb7874f3c496a410a53e815f41c6dab10d3cce9fb1fc32afea32610e2c"
+  url "https://github.com/simonmichael/hledger/archive/refs/tags/1.99.5.tar.gz"
+  sha256 "f30ce299f709039ec68c3b0b43b4db70b4e6f872207dae42fcd8ffccf96884d3"
   license "GPL-3.0-or-later"
 
   livecheck do
