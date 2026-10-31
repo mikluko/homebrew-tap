@@ -113,6 +113,7 @@ brew install mikluko/tap/<formula>
 
 | Formula | Description | Upstream |
 | --- | --- | --- |
+| `baox` | Run commands with credentials from OpenBao, plus credential helpers for kubectl, git and AWS | [mikluko/baox](https://sarak.sh/mikluko/baox) |
 | `claudectx` | Launch Claude Code with provider contexts, kubeconfig-style | [mikluko/claudectx](https://github.com/mikluko/claudectx) |
 | `mcp-proxy` | MCP proxy connecting stdio/HTTP clients to remote servers, with OAuth | [mikluko/mcp-proxy](https://github.com/mikluko/mcp-proxy) |
 | `zmd` | Session picker for zmx: start one in a checkout, or attach a running one | [mikluko/zmd](https://github.com/mikluko/zmd) |
