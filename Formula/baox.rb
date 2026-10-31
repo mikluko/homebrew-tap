@@ -1,8 +1,8 @@
 class Baox < Formula
   desc "Run commands with credentials from OpenBao, plus credential helpers"
   homepage "https://sarak.sh/mikluko/baox"
-  url "https://sarak.sh/mikluko/baox/archive/v0.1.0.tar.gz"
-  sha256 "73734e160af091fd9bf8ad7b893f410bfb919192d69e57180800fb1a48a5960b"
+  url "https://sarak.sh/mikluko/baox/archive/v0.2.0.tar.gz"
+  sha256 "6f05cbc7cd809623fa8a941db40410521005e854c40cd483d3cd3dad526c5ddf"
   license "MIT"
   head "https://sarak.sh/mikluko/baox.git", branch: "main"
 
