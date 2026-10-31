@@ -1,12 +1,12 @@
 class HledgerAT199 < Formula
   desc "Easy plain text accounting with command-line, terminal and web UIs"
   homepage "https://hledger.org/"
-  url "https://github.com/simonmichael/hledger/archive/refs/tags/1.99.5.tar.gz"
+  url "https://github.com/hledgerorg/hledger/archive/refs/tags/1.99.5.tar.gz"
   sha256 "f30ce299f709039ec68c3b0b43b4db70b4e6f872207dae42fcd8ffccf96884d3"
   license "GPL-3.0-or-later"
 
   livecheck do
-    url "https://github.com/simonmichael/hledger.git"
+    url "https://github.com/hledgerorg/hledger.git"
     regex(/^v?(1\.99(?:\.\d+)+)$/i)
     strategy :git
   end
@@ -50,7 +50,7 @@ class HledgerAT199 < Formula
     ENV.deparallelize { system "stack", "install", *args }
 
     # Strip binaries to reduce size by ~100MB (~25%) on macOS. This has no impact on Linux. Also done upstream:
-    # https://github.com/simonmichael/hledger/blob/hledger-1.52.1/.github/workflows/binaries-mac-arm64.yml#L156-L158
+    # https://github.com/hledgerorg/hledger/blob/hledger-1.52.1/.github/workflows/binaries-mac-arm64.yml#L156-L158
     system "strip", *bin.children if OS.mac?
 
     man1.install Utils::Gzip.compress(*Dir["hledger*/*.1"])

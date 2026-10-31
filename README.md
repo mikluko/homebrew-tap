@@ -78,7 +78,7 @@ the log. Run one of the app, the CLI, and the service at a time.
 ## hledger@1.99
 
 The hledger 1.99.x pre-release series, the run-up to 2.0. Upstream:
-[simonmichael/hledger](https://github.com/simonmichael/hledger).
+[hledgerorg/hledger](https://github.com/hledgerorg/hledger).
 
 ```sh
 brew install mikluko/tap/hledger@1.99
