@@ -128,9 +128,6 @@ brew install mikluko/tap/<formula>
 | Formula | Description | Upstream |
 | --- | --- | --- |
 | `baox` | Run commands with credentials from OpenBao, plus credential helpers for kubectl, git and AWS | [mikluko/baox](https://sarak.sh/mikluko/baox) |
-| `claudectx` | Launch Claude Code with provider contexts, kubeconfig-style | [mikluko/claudectx](https://github.com/mikluko/claudectx) |
-| `mcp-proxy` | MCP proxy connecting stdio/HTTP clients to remote servers, with OAuth | [mikluko/mcp-proxy](https://github.com/mikluko/mcp-proxy) |
-| `zmd` | Session picker for zmx: start one in a checkout, or attach a running one | [mikluko/zmd](https://github.com/mikluko/zmd) |
 | `hledger-fmt` | hledger add-on: format-preserving journal formatter | [mikluko/hledger-fmt](https://github.com/mikluko/hledger-fmt) |
 | `hledger-close-cta` | hledger add-on: period-end closing with currency translation adjustment | [mikluko/hledger-close-cta](https://github.com/mikluko/hledger-close-cta) |
 | `claude-agent-acp` | ACP adapter for Claude Code, powered by the Claude Agent SDK | [agentclientprotocol/claude-agent-acp](https://github.com/agentclientprotocol/claude-agent-acp) |
